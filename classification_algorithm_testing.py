@@ -145,7 +145,7 @@ cancer = (
 )
 
 cancer.diag.replace(['M', 'B'], [1, 0], inplace=True)
-cancer.drop(['id', 'perimeter', 'area'], axis=1, inplace=True)
+cancer.drop(['id'], axis=1, inplace=True)
 
 
 # Plots
@@ -159,16 +159,6 @@ seaborn.heatmap(
   cmap=plt.cm.RdBu,
   linecolor='white',
   annot=True
-)
-
-pairs = seaborn.pairplot(
-    data=cancer,
-    hue='diag',
-    palette='seismic',
-    size=0.8,
-    diag_kind='hist'
-).set(
-    xticklabels=[]
 )
 
 scat = seaborn.FacetGrid(
@@ -189,7 +179,7 @@ pca = decomposition.PCA(n_components=2)
 x_pca = pca.fit(x_full).transform(x_full)
 
 print('Individual % Variance Explained by First Two Components: {0}'
-      .format(str(pca.explained_variance_ratio_)))
+      .format(pca.explained_variance_ratio_))
 
 print('Total % Variance Explained by First Two Components: {0}'
       .format(sum(pca.explained_variance_ratio_)))
@@ -380,8 +370,8 @@ gb_model, gb_data_dict, gb_scores = gb_outputs
 
 # Results Data Frame
 scores_list = [
-    dummy_scores, gnb_scores, logistic_scores, knn_scores,
-    svc_scores, rf_scores, gb_scores
+    dummy_scores, gnb_scores, logistic_scores, lda_scores,
+    qda_scores, knn_scores, svc_scores, rf_scores, gb_scores
 ]
 holdout_stats = pandas.DataFrame(
     scores_list,
@@ -393,6 +383,7 @@ holdout_stats = pandas.DataFrame(
 )
 holdout_stats['Algorithms'] = [
     'Dummy', 'Gaussian Naive Bayes', 'Logistic Regression',
+    'Linear Discriminant Analysis', 'Quadratic Discriminant Analysis',
     'K Nearest Neighbors', 'Support Vector Classifier',
     'Random Forest', 'Gradient Boosting'
 ]
