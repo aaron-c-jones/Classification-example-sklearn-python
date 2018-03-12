@@ -129,7 +129,7 @@ def model_fit(algorithm, parameters, data, target):
     return outputs
 
 
-# Iris Data
+# Cancer Data
 cancer = (
     pandas.read_csv(
         '/Users/aaronjones/Classification-example-sklearn-python/BreastCancer.csv',
